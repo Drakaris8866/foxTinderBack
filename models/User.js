@@ -11,6 +11,9 @@ const User = new Schema({
         images: [{type: String}]
     },
 
+    liked: [{type: String}],
+    disliked: [{type: String}]
+
 })
 
 
