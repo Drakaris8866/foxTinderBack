@@ -5,17 +5,17 @@ import onError from "../../utils/onError.js";
 const messages = {};
 
 export default function messageHandlers(io, socket) {
-  const { roomId } = socket;
-
+  let { roomId } = socket;
   const updateMessageList = () => {
     io.to(roomId).emit("message_list:update", messages[roomId]);
   };
 
   socket.on("message:get", async () => {
     try {
-      const _messages = await Message.find({
+      let _messages = await Message.find({
         roomId,
       });
+
       messages[roomId] = _messages;
 
       updateMessageList();

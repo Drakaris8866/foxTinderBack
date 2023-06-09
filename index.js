@@ -8,6 +8,7 @@ import onConnection from "./socket_io/onConnection.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import favoriteRouter from "./routers/favoriteRouter.js";
+import { getFilePath } from "./utils/file.js";
 
 const app = express();
 
@@ -20,7 +21,7 @@ app.use(
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/favorite", favoriteRouter);
-app.use("upload", upload.single("file"), (req, res) => {
+app.use("/upload", upload.single("file"), (req, res) => {
   if (!req.file) return res.sendStatus(400);
 
   const relativeFilePath = req.file.path
@@ -29,9 +30,8 @@ app.use("upload", upload.single("file"), (req, res) => {
 
   res.status(200).json(relativeFilePath);
 });
-app.use("files", (req, res) => {
+app.use("/files", (req, res) => {
   const filePath = getFilePath(req.url);
-
   res.status(200).sendFile(filePath);
 });
 

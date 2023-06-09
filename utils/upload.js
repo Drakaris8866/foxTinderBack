@@ -1,6 +1,7 @@
 import multer from "multer";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { existsSync, mkdirSync } from "fs";
 
 const _dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -24,4 +25,4 @@ const upload = multer({
   }),
 });
 
-export default upload
+export default upload;
